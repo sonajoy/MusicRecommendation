@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -15,17 +14,17 @@ music_data = recommendation_model['music_data']
 
 # Function to make recommendations based on music name
 def make_name_recommendations(music_name):
-    # Convert input music name to lowercase
-    music_name = music_name.lower()
+    # Convert input music name to lowercase and remove extra spaces
+    music_name = music_name.lower().replace(" ", "")
 
-    # Convert track names to lowercase for case-insensitive comparison
-    music_data['track_name_lower'] = music_data['track_name'].str.lower()
+    # Convert track names to lowercase and remove spaces for case-insensitive and space-insensitive comparison
+    music_data['track_name_clean'] = music_data['track_name'].str.lower().str.replace(" ", "")
 
-    if music_name not in music_data['track_name_lower'].values:
+    if music_name not in music_data['track_name_clean'].values:
         return None, None
 
     # Get the feature vector of the input music
-    input_music = music_data[music_data['track_name_lower'] == music_name]
+    input_music = music_data[music_data['track_name_clean'] == music_name]
     input_features = input_music[['danceability', 'energy', 'loudness', 'mode', 'speechiness',
                                   'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo', 'artist_genres']]
 
