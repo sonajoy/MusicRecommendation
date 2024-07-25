@@ -3,11 +3,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import gzip
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Load the compressed recommendation model
-with gzip.open('recommendation.pkl.gz', 'rb') as f:
+# Load the recommendation model
+with open('recommendation.pkl', 'rb') as f:
     recommendation_model = pickle.load(f)
 
 model = recommendation_model['model']
